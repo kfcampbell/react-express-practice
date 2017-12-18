@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import './App.css';
 
 class App extends Component {
-  state = { weather: {} }
+  constructor() {
+    super();
+    this.state = { weather: {} }
+  }
 
   componentDidMount() {
-    /*fetch('/users')
-      .then(res => res.json())
-      .then(users => this.setState({ users }));*/
     fetch('/weather')
       .then(res => res.json())
       .then(weather => this.setState({ weather }));
@@ -16,10 +16,15 @@ class App extends Component {
 
   render() {
     console.log(this.state.weather);
+    var description = 'No description currently available';
+    if(this.state.weather['weather'] !== undefined){
+      description = this.state.weather['weather'][0]['description'];
+    }
+
     return (
       <div className="App">
         <h1>Weather</h1>
-        <h2>Description: {this.state.weather["weather"][0]["description"]}</h2>
+        <h2>Description: { description }</h2>
       </div>
     );
   }
